@@ -1,6 +1,6 @@
 window.addEventListener(
 	'load',
 	function() {
-		Test();
+		var tags_input = new WizardTags('.tags-input');
 	}
 );
