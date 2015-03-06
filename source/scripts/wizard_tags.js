@@ -4,7 +4,9 @@ function WizardTags(element_query, options) {
 
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
-	root.innerText = "Ololo!";
+
+	var input = document.createElement('input');
+	root.appendChild(input);
 
 	var list = document.createElement('ul');
 	list.className = 'wizard-tags-autocomplete-list';
