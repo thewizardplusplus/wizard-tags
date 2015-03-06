@@ -1,12 +1,19 @@
 function WizardTags(element_query, options) {
 	options = options || {};
-	options.tags = options.tags || [];
 
 	var TagsGenerator = function() {
 		return [];
 	};
 	if (options.tags instanceof Function) {
 		TagsGenerator = options.tags;
+	} else if (options.tags instanceof Array) {
+		TagsGenerator = function(query) {
+			return options.tags.filter(
+				function(tag) {
+					return tag.substr(0, query.length) == query;
+				}
+			);
+		};
 	}
 
 	var root = document.querySelector(element_query);
@@ -23,7 +30,7 @@ function WizardTags(element_query, options) {
 				list.style.maxHeight = options.list_maximal_height + 'px';
 			}
 
-			var tags = TagsGenerator();
+			var tags = TagsGenerator(this.value);
 			for (var i = 0; i < tags.length; i++) {
 				var item = document.createElement('li');
 				item.innerText = tags[i];
