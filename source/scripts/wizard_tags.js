@@ -1,5 +1,13 @@
 function WizardTags(element_query, options) {
 	options = options || {};
+	options.tags = options.tags || [];
+
+	var TagsGenerator = function() {
+		return [];
+	};
+	if (options.tags instanceof Function) {
+		TagsGenerator = options.tags;
+	}
 
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
@@ -15,9 +23,10 @@ function WizardTags(element_query, options) {
 				list.style.maxHeight = options.list_maximal_height + 'px';
 			}
 
-			for (var i = 0; i < 10; i++) {
+			var tags = TagsGenerator();
+			for (var i = 0; i < tags.length; i++) {
 				var item = document.createElement('li');
-				item.innerText = "ololo #" + i;
+				item.innerText = tags[i];
 
 				list.appendChild(item);
 			}
