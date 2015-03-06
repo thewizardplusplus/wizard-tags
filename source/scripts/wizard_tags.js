@@ -5,12 +5,24 @@ function WizardTags(element_query, options) {
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
 
-	var input = document.createElement('input');
-	root.appendChild(input);
-
 	var list = document.createElement('ul');
 	list.className = 'wizard-tags-autocomplete-list';
 	list.style.maxHeight = options.list_maximal_height + 'px';
+
+	var input = document.createElement('input');
+	input.addEventListener(
+		'focus',
+		function() {
+			list.style.display = 'block';
+		}
+	);
+	input.addEventListener(
+		'blur',
+		function() {
+			list.style.display = 'none';
+		}
+	);
+	root.appendChild(input);
 
 	for (var i = 0; i < 10; i++) {
 		var item = document.createElement('li');
