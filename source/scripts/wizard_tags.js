@@ -1,13 +1,14 @@
 function WizardTags(element_query, options) {
 	options = options || {};
-	options.list_maximal_height = options.list_maximal_height || 200;
 
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
 
 	var list = document.createElement('ul');
 	list.className = 'wizard-tags-autocomplete-list';
-	list.style.maxHeight = options.list_maximal_height + 'px';
+	if (typeof options.list_maximal_height !== "undefined") {
+		list.style.maxHeight = options.list_maximal_height + 'px';
+	}
 
 	var input = document.createElement('input');
 	input.addEventListener(
