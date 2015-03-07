@@ -31,8 +31,16 @@ function WizardTags(element_query, options) {
 
 		var tags = TagsGenerator(query);
 		for (var i = 0; i < tags.length; i++) {
+			var text = tags[i];
+
 			var item = document.createElement('li');
-			item.innerText = tags[i];
+			item.innerText = text;
+			item.addEventListener(
+				'click',
+				function() {
+					AddTag(text);
+				}
+			);
 
 			list.appendChild(item);
 		}
@@ -66,4 +74,14 @@ function WizardTags(element_query, options) {
 	);
 	input.addEventListener('blur', RemoveList);
 	root.appendChild(input);
+
+	var AddTag = function(text) {
+		var tag = document.createElement('span');
+		tag.className = 'wizard-tags-tag-view';
+		tag.innerText = text;
+
+		root.insertBefore(tag, input);
+	};
+	AddTag('test 1');
+	AddTag('test 2');
 }

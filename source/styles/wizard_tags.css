@@ -24,3 +24,13 @@
 	border-top: 1px solid #aaa;
 }
 
+.wizard-tags .wizard-tags-tag-view {
+	margin: 5px 0;
+	padding: 2px 5px;
+	border: 1px solid #777;
+}
+
+.wizard-tags .wizard-tags-tag-view:not(:first-child) {
+	margin-left: 5px;
+}
+
