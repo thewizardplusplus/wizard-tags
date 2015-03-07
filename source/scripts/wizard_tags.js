@@ -54,9 +54,7 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'keyup',
 		function() {
-			if (list_update_timer != null) {
-				clearTimeout(list_update_timer);
-			}
+			clearTimeout(list_update_timer);
 			list_update_timer = setTimeout(
 				function() {
 					RemoveList();
