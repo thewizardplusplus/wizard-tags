@@ -38,7 +38,7 @@ function WizardTags(element_query, options) {
 			item.addEventListener(
 				'click',
 				function() {
-					AddTag(text);
+					AddTag(this.innerText);
 				}
 			);
 
@@ -72,7 +72,12 @@ function WizardTags(element_query, options) {
 			);
 		}
 	);
-	input.addEventListener('blur', RemoveList);
+	input.addEventListener(
+		'blur',
+		function() {
+			setTimeout(RemoveList, 1);
+		}
+	);
 	root.appendChild(input);
 
 	var AddTag = function(text) {
