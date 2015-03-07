@@ -1,4 +1,6 @@
 function WizardTags(element_query, options) {
+	var LIST_UPDATE_TIMEOUT = 300;
+
 	options = options || {};
 
 	var TagsGenerator = function() {
@@ -46,6 +48,22 @@ function WizardTags(element_query, options) {
 		'focus',
 		function() {
 			CreateList(input.value);
+		}
+	);
+	var list_update_timer = null;
+	input.addEventListener(
+		'keyup',
+		function() {
+			if (list_update_timer != null) {
+				clearTimeout(list_update_timer);
+			}
+			list_update_timer = setTimeout(
+				function() {
+					RemoveList();
+					CreateList(input.value);
+				},
+				LIST_UPDATE_TIMEOUT
+			);
 		}
 	);
 	input.addEventListener('blur', RemoveList);
