@@ -83,10 +83,16 @@ function WizardTags(element_query, options) {
 	var AddTag = function(text) {
 		var tag = document.createElement('span');
 		tag.className = 'wizard-tags-tag-view';
-		tag.innerText = text;
+
+		var tag_text = document.createElement('span');
+		tag_text.className = 'wizard-tags-tag-view-tag-text';
+		tag_text.innerText = text;
+		tag.appendChild(tag_text);
+
+		var tag_remove_button = document.createElement('span');
+		tag_remove_button.className = 'wizard-tags-tag-view-tag-remove-button';
+		tag.appendChild(tag_remove_button);
 
 		root.insertBefore(tag, input);
 	};
-	AddTag('test 1');
-	AddTag('test 2');
 }

@@ -26,11 +26,22 @@
 
 .wizard-tags .wizard-tags-tag-view {
 	margin: 5px 0;
-	padding: 2px 5px;
 	border: 1px solid #777;
 }
 
 .wizard-tags .wizard-tags-tag-view:not(:first-child) {
 	margin-left: 5px;
+}
+
+.wizard-tags .wizard-tags-tag-view-tag-text {
+	padding: 0 5px;
+}
+
+.wizard-tags .wizard-tags-tag-view-tag-remove-button:after {
+	content: '\002715';
+	display: inline-block;
+	width: 1.5em;
+	border-left: 1px solid #aaa;
+	text-align: center;
 }
 
