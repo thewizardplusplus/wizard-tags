@@ -25,7 +25,7 @@ function WizardTags(element_query, options) {
 	var list = null;
 	var CreateList = function(query) {
 		list = document.createElement('ul');
-		list.className = 'wizard-tags-autocomplete-list';
+		list.className = 'autocomplete-list';
 
 		var tags = TagsGenerator(query);
 		for (var i = 0; i < tags.length; i++) {
@@ -86,15 +86,15 @@ function WizardTags(element_query, options) {
 
 	var AddTag = function(text) {
 		var tag = document.createElement('span');
-		tag.className = 'wizard-tags-tag-view';
+		tag.className = 'tag-view';
 
 		var tag_text = document.createElement('span');
-		tag_text.className = 'wizard-tags-tag-view-tag-text';
+		tag_text.className = 'text';
 		tag_text.innerText = text;
 		tag.appendChild(tag_text);
 
 		var tag_remove_button = document.createElement('span');
-		tag_remove_button.className = 'wizard-tags-tag-view-tag-remove-button';
+		tag_remove_button.className = 'remove-button';
 		tag_remove_button.addEventListener(
 			'click',
 			function() {

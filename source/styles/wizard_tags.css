@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 }
 
-.wizard-tags .wizard-tags-autocomplete-list {
+.wizard-tags .autocomplete-list {
 	float: left;
 	width: 100%;
 	background-color: white;
@@ -16,28 +16,29 @@
 	list-style-type: none;
 }
 
-.wizard-tags .wizard-tags-autocomplete-list li {
+.wizard-tags .autocomplete-list li {
 	padding: 5px;
-}
-
-.wizard-tags .wizard-tags-autocomplete-list li:not(:first-child) {
 	border-top: 1px solid #aaa;
 }
 
-.wizard-tags .wizard-tags-tag-view {
-	margin: 5px 0;
+.wizard-tags .autocomplete-list li:first-child {
+	border-top: 0;
+}
+
+.wizard-tags .tag-view {
+	margin: 5px 0 5px 5px;
 	border: 1px solid #777;
 }
 
-.wizard-tags .wizard-tags-tag-view:not(:first-child) {
-	margin-left: 5px;
+.wizard-tags .tag-view:first-child {
+	margin-left: 0;
 }
 
-.wizard-tags .wizard-tags-tag-view-tag-text {
+.wizard-tags .tag-view .text {
 	padding: 0 5px;
 }
 
-.wizard-tags .wizard-tags-tag-view-tag-remove-button:after {
+.wizard-tags .tag-view .remove-button:after {
 	content: '\002715';
 	display: inline-block;
 	width: 1.5em;
