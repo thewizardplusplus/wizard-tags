@@ -2,6 +2,7 @@ function WizardTags(element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
 	options = options || {};
+	options.separators = options.separators || ' ';
 
 	var TagsGenerator = function() {
 		return [];
@@ -59,6 +60,12 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'keyup',
 		function() {
+			var last_symbol = input.value.slice(-1);
+			if (options.separators.indexOf(last_symbol) != -1) {
+				AddTag(input.value.slice(0, -1));
+				return;
+			}
+			
 			clearTimeout(list_update_timer);
 			list_update_timer = setTimeout(
 				function() {
@@ -97,5 +104,7 @@ function WizardTags(element_query, options) {
 		tag.appendChild(tag_remove_button);
 
 		root.insertBefore(tag, input);
+
+		input.value = '';
 	};
 }
