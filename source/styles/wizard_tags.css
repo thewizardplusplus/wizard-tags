@@ -1,5 +1,16 @@
 @charset "utf-8";
 
+.wizard-tags {
+	padding: 5px;
+	border: 1px solid #777;
+}
+
+.wizard-tags:after {
+	content: '';
+	display: block;
+	clear: left;
+}
+
 .wizard-tags * {
 	margin: 0;
 	padding: 0;
@@ -26,12 +37,14 @@
 }
 
 .wizard-tags .tag-view {
-	margin: 5px 0 5px 5px;
+	display: block;
+	float: left;
+	margin: 0 5px 5px 0;
 	border: 1px solid #777;
 }
 
-.wizard-tags .tag-view:first-child {
-	margin-left: 0;
+.wizard-tags .tag-view:last-of-type {
+	margin-right: 0;
 }
 
 .wizard-tags .tag-view .text {
