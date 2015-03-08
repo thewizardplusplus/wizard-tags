@@ -91,6 +91,12 @@ function WizardTags(element_query, options) {
 
 		var tag_remove_button = document.createElement('span');
 		tag_remove_button.className = 'wizard-tags-tag-view-tag-remove-button';
+		tag_remove_button.addEventListener(
+			'click',
+			function() {
+				root.removeChild(tag);
+			}
+		);
 		tag.appendChild(tag_remove_button);
 
 		root.insertBefore(tag, input);
