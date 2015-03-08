@@ -25,9 +25,6 @@ function WizardTags(element_query, options) {
 	var CreateList = function(query) {
 		list = document.createElement('ul');
 		list.className = 'wizard-tags-autocomplete-list';
-		if (typeof options.list_maximal_height !== "undefined") {
-			list.style.maxHeight = options.list_maximal_height + 'px';
-		}
 
 		var tags = TagsGenerator(query);
 		for (var i = 0; i < tags.length; i++) {
