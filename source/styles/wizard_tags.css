@@ -5,16 +5,16 @@
 	border: 1px solid #888;
 }
 
-.wizard-tags:after {
-	content: '';
-	display: block;
-	clear: left;
-}
-
 .wizard-tags * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+.wizard-tags .inner-container:after {
+	content: '';
+	display: block;
+	clear: left;
 }
 
 .wizard-tags .autocomplete-list {
@@ -40,7 +40,7 @@
 	background-color: #ccc;
 }
 
-.wizard-tags .tag-view {
+.wizard-tags .inner-container .tag-view {
 	display: block;
 	float: left;
 	margin: 0 5px 5px 0;
@@ -48,23 +48,23 @@
 	border: 1px solid #888;
 }
 
-.wizard-tags .tag-view:last-of-type {
+.wizard-tags .inner-container .tag-view:last-of-type {
 	margin-right: 0;
 }
 
-.wizard-tags .tag-view .text {
+.wizard-tags .inner-container .tag-view .text {
 	padding: 0 5px;
 }
 
-.wizard-tags .tag-view .remove-button {
+.wizard-tags .inner-container .tag-view .remove-button {
 	background-color: #ccc;
 }
 
-.wizard-tags .tag-view .remove-button:active {
+.wizard-tags .inner-container .tag-view .remove-button:active {
 	background-color: #888;
 }
 
-.wizard-tags .tag-view .remove-button:after {
+.wizard-tags .inner-container .tag-view .remove-button:after {
 	content: '\002715';
 	display: inline-block;
 	width: 1.5em;
