@@ -1,8 +1,10 @@
 function WizardTags(element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
+	var self = this;
 	options = options || {};
 	options.separators = options.separators || ' ';
+	options.onChange = options.onChange || function() {};
 
 	var TagsGenerator = function() {
 		return [];
@@ -103,12 +105,25 @@ function WizardTags(element_query, options) {
 			'click',
 			function() {
 				inner_container.removeChild(tag);
+				options.onChange.apply(self);
 			}
 		);
 		tag.appendChild(tag_remove_button);
 
 		inner_container.insertBefore(tag, input);
+		options.onChange.apply(self);
 
 		input.value = '';
+	};
+
+	this.getTags = function() {
+		var tags = [];
+		var tags_views = inner_container.querySelectorAll('.tag-view');
+		for (var i = 0; i < tags_views.length; i++) {
+			var tag = tags_views[i].querySelector('.text').innerText;
+			tags.push(tag);
+		}
+
+		return tags;
 	};
 }
