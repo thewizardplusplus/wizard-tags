@@ -26,6 +26,12 @@ function WizardTags(element_query, options) {
 
 	var inner_container = document.createElement('div');
 	inner_container.className = 'inner-container';
+	inner_container.addEventListener(
+		'click',
+		function() {
+			input.focus();
+		}
+	);
 	root.appendChild(inner_container);
 
 	var list = null;
