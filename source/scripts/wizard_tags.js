@@ -56,6 +56,8 @@ function WizardTags(element_query, options) {
 	};
 
 	var input = document.createElement('input');
+	input.className = 'input';
+	input.setAttribute('size', 1);
 	input.addEventListener(
 		'focus',
 		function() {
@@ -66,6 +68,9 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'keyup',
 		function() {
+			var new_size = input.value.length + 1;
+			input.setAttribute('size', new_size);
+
 			var last_symbol = input.value.slice(-1);
 			if (options.separators.indexOf(last_symbol) != -1) {
 				AddTag(input.value.slice(0, -1));
@@ -114,6 +119,7 @@ function WizardTags(element_query, options) {
 		options.onChange.apply(self);
 
 		input.value = '';
+		input.setAttribute('size', 1);
 	};
 
 	this.getTags = function() {

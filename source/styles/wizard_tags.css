@@ -17,6 +17,10 @@
 	clear: left;
 }
 
+.wizard-tags .input {
+	float: left;
+}
+
 .wizard-tags .autocomplete-list {
 	float: left;
 	width: 100%;
