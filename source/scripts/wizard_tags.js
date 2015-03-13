@@ -24,6 +24,12 @@ var WizardTags = (function() {
 
 		return TagsGenerator;
 	};
+	var MakeRootContainer = function(root_element_query) {
+		var root_container = document.querySelector(root_element_query);
+		root_container.className = 'wizard-tags';
+
+		return root_container;
+	};
 	var MakeInnerContainer = function(input) {
 		var inner_container = document.createElement('div');
 		inner_container.className = 'inner-container';
@@ -37,16 +43,14 @@ var WizardTags = (function() {
 		return inner_container;
 	};
 
-return function(element_query, options) {
+return function(root_element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
 	var self = this;
 	options = ProcessOptions(options);
 	var TagsGenerator = GetTagsGenerator(options);
 
-	var root = document.querySelector(element_query);
-	root.className = 'wizard-tags';
-
+	var root = MakeRootContainer(root_element_query);
 	var inner_container = MakeInnerContainer(input);
 	root.appendChild(inner_container);
 
