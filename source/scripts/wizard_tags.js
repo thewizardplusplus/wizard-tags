@@ -57,10 +57,9 @@ function WizardTags(element_query, options) {
 
 		root.appendChild(list);
 	};
-	var RemoveList = function() {
+	var RemoveList = function(list) {
 		if (list != null) {
 			root.removeChild(list);
-			list = null;
 		}
 	};
 
@@ -70,7 +69,9 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'focus',
 		function() {
-			RemoveList();
+			var list_copy = list;
+			RemoveList(list_copy);
+
 			CreateList(input.value);
 		}
 	);
@@ -94,7 +95,9 @@ function WizardTags(element_query, options) {
 			clearTimeout(list_update_timer);
 			list_update_timer = setTimeout(
 				function() {
-					RemoveList();
+					var list_copy = list;
+					RemoveList(list_copy);
+
 					CreateList(input.value);
 				},
 				LIST_UPDATE_TIMEOUT
@@ -104,7 +107,13 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'blur',
 		function() {
-			setTimeout(RemoveList, 1);
+			setTimeout(
+				function() {
+					var list_copy = list;
+					RemoveList(list_copy);
+				},
+				1
+			);
 		}
 	);
 	inner_container.appendChild(input);
