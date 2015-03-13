@@ -1,4 +1,11 @@
 var WizardTags = (function() {
+	var ProcessOptions = function(options) {
+		var processed_options = options || {};
+		processed_options.separators = options.separators || ' ';
+		processed_options.onChange = options.onChange || function() {};
+
+		return processed_options;
+	};
 	var MakeTagsGenerator = function(options) {
 		var TagsGenerator = function() {
 			return [];
@@ -34,10 +41,7 @@ return function(element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
 	var self = this;
-	options = options || {};
-	options.separators = options.separators || ' ';
-	options.onChange = options.onChange || function() {};
-
+	options = ProcessOptions(options);
 	var TagsGenerator = MakeTagsGenerator(options);
 
 	var root = document.querySelector(element_query);
