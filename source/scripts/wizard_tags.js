@@ -1,4 +1,12 @@
 var WizardTags = (function() {
+	var MakeInnerContainer = function(click_callback) {
+		var inner_container = document.createElement('div');
+		inner_container.className = 'inner-container';
+		inner_container.addEventListener('click', click_callback);
+
+		return inner_container;
+	};
+
 return function(element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
@@ -25,10 +33,7 @@ return function(element_query, options) {
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
 
-	var inner_container = document.createElement('div');
-	inner_container.className = 'inner-container';
-	inner_container.addEventListener(
-		'click',
+	var inner_container = MakeInnerContainer(
 		function() {
 			input.focus();
 		}
