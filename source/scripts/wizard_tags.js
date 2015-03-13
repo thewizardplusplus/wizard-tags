@@ -1,4 +1,22 @@
 var WizardTags = (function() {
+	var MakeTagsGenerator = function(options) {
+		var TagsGenerator = function() {
+			return [];
+		};
+		if (options.tags instanceof Function) {
+			TagsGenerator = options.tags;
+		} else if (options.tags instanceof Array) {
+			TagsGenerator = function(query) {
+				return options.tags.filter(
+					function(tag) {
+						return tag.substr(0, query.length) == query;
+					}
+				);
+			};
+		}
+
+		return TagsGenerator;
+	};
 	var MakeInnerContainer = function(input) {
 		var inner_container = document.createElement('div');
 		inner_container.className = 'inner-container';
@@ -20,20 +38,7 @@ return function(element_query, options) {
 	options.separators = options.separators || ' ';
 	options.onChange = options.onChange || function() {};
 
-	var TagsGenerator = function() {
-		return [];
-	};
-	if (options.tags instanceof Function) {
-		TagsGenerator = options.tags;
-	} else if (options.tags instanceof Array) {
-		TagsGenerator = function(query) {
-			return options.tags.filter(
-				function(tag) {
-					return tag.substr(0, query.length) == query;
-				}
-			);
-		};
-	}
+	var TagsGenerator = MakeTagsGenerator(options);
 
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
