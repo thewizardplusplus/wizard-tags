@@ -1,4 +1,5 @@
-function WizardTags(element_query, options) {
+var WizardTags = (function() {
+return function(element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
 	var self = this;
@@ -157,4 +158,5 @@ function WizardTags(element_query, options) {
 
 		return tags;
 	};
-}
+};
+})();
