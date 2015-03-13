@@ -6,7 +6,7 @@ var WizardTags = (function() {
 
 		return processed_options;
 	};
-	var MakeTagsGenerator = function(options) {
+	var GetTagsGenerator = function(options) {
 		var TagsGenerator = function() {
 			return [];
 		};
@@ -42,7 +42,7 @@ return function(element_query, options) {
 
 	var self = this;
 	options = ProcessOptions(options);
-	var TagsGenerator = MakeTagsGenerator(options);
+	var TagsGenerator = GetTagsGenerator(options);
 
 	var root = document.querySelector(element_query);
 	root.className = 'wizard-tags';
