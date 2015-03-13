@@ -58,7 +58,10 @@ function WizardTags(element_query, options) {
 		root.appendChild(list);
 	};
 	var RemoveList = function() {
-		root.removeChild(list);
+		if (list != null) {
+			root.removeChild(list);
+			list = null;
+		}
 	};
 
 	var input = document.createElement('input');
@@ -67,6 +70,7 @@ function WizardTags(element_query, options) {
 	input.addEventListener(
 		'focus',
 		function() {
+			RemoveList();
 			CreateList(input.value);
 		}
 	);
@@ -80,6 +84,10 @@ function WizardTags(element_query, options) {
 			var last_symbol = input.value.slice(-1);
 			if (options.separators.indexOf(last_symbol) != -1) {
 				AddTag(input.value.slice(0, -1));
+
+				input.value = '';
+				input.setAttribute('size', 1);
+
 				return;
 			}
 			
@@ -102,6 +110,11 @@ function WizardTags(element_query, options) {
 	inner_container.appendChild(input);
 
 	var AddTag = function(text) {
+		text = text.trim();
+		if (text.length == 0) {
+			return;
+		}
+
 		var tag = document.createElement('span');
 		tag.className = 'tag-view';
 
@@ -123,9 +136,6 @@ function WizardTags(element_query, options) {
 
 		inner_container.insertBefore(tag, input);
 		options.onChange.apply(self);
-
-		input.value = '';
-		input.setAttribute('size', 1);
 	};
 
 	this.getTags = function() {
