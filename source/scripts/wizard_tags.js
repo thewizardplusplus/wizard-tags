@@ -84,6 +84,70 @@ var WizardTags = (function() {
 			return this.makeList(new_query);
 		};
 	};
+	var TagManager = function(inner_container, change_handler) {
+		var MakeTagView = function() {
+			var tag_view = document.createElement('span');
+			tag_view.className = 'tag-view';
+
+			return tag_view;
+		};
+		var MakeTextView = function(text) {
+			var text_view = document.createElement('span');
+			text_view.className = 'text-view';
+			text_view.innerText = text;
+
+			return text_view;
+		};
+		var MakeRemoveButton = function(tag) {
+			var remove_button = document.createElement('span');
+			remove_button.className = 'remove-button';
+			remove_button.addEventListener(
+				'click',
+				function() {
+					this.removeTag(tag);
+				}
+			);
+
+			return remove_button;
+		};
+		var MakeTag = function(text) {
+			var tag_view = MakeTagView();
+
+			var text_view = MakeTextView(text);
+			tag_view.appendChild(text_view);
+
+			var remove_button = MakeRemoveButton(tag);
+			tag_view.appendChild(remove_button);
+
+			return tag_view;
+		};
+
+		this.getTags = function() {
+			var tags = [];
+			var tags_views = inner_container.querySelectorAll('.tag-view');
+			for (var i = 0; i < tags_views.length; i++) {
+				var tag = tags_views[i].querySelector('.text-view').innerText;
+				tags.push(tag);
+			}
+
+			return tags;
+		};
+		this.addTag = function(text) {
+			text = text.trim();
+			if (text.length == 0) {
+				return;
+			}
+
+			var tag = MakeTag(text);
+			inner_container.insertBefore(tag, input);
+
+			change_handler();
+		};
+		this.removeTag = function(tag) {
+			inner_container.removeChild(tag);
+			change_handler();
+		};
+	};
 
 return function(root_element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
@@ -146,45 +210,5 @@ return function(root_element_query, options) {
 		}
 	);
 	inner_container.appendChild(input);
-
-	var AddTag = function(text) {
-		text = text.trim();
-		if (text.length == 0) {
-			return;
-		}
-
-		var tag = document.createElement('span');
-		tag.className = 'tag-view';
-
-		var tag_text = document.createElement('span');
-		tag_text.className = 'text';
-		tag_text.innerText = text;
-		tag.appendChild(tag_text);
-
-		var tag_remove_button = document.createElement('span');
-		tag_remove_button.className = 'remove-button';
-		tag_remove_button.addEventListener(
-			'click',
-			function() {
-				inner_container.removeChild(tag);
-				options.onChange.apply(self);
-			}
-		);
-		tag.appendChild(tag_remove_button);
-
-		inner_container.insertBefore(tag, input);
-		options.onChange.apply(self);
-	};
-
-	this.getTags = function() {
-		var tags = [];
-		var tags_views = inner_container.querySelectorAll('.tag-view');
-		for (var i = 0; i < tags_views.length; i++) {
-			var tag = tags_views[i].querySelector('.text').innerText;
-			tags.push(tag);
-		}
-
-		return tags;
-	};
 };
 })();
