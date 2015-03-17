@@ -7,13 +7,13 @@ var WizardTags = (function() {
 		return processed_options;
 	};
 	var GetTagsGenerator = function(options) {
-		var TagsGenerator = function() {
+		var tags_generator = function() {
 			return [];
 		};
 		if (options.tags instanceof Function) {
-			TagsGenerator = options.tags;
+			tags_generator = options.tags;
 		} else if (options.tags instanceof Array) {
-			TagsGenerator = function(query) {
+			tags_generator = function(query) {
 				return options.tags.filter(
 					function(tag) {
 						return tag.substr(0, query.length) == query;
@@ -22,7 +22,7 @@ var WizardTags = (function() {
 			};
 		}
 
-		return TagsGenerator;
+		return tags_generator;
 	};
 	var MakeRootContainer = function(root_element_query) {
 		var root_container = document.querySelector(root_element_query);
@@ -42,46 +42,62 @@ var WizardTags = (function() {
 
 		return inner_container;
 	};
+	var AutocompleteListManager = function(tags_generator, root_container) {
+		var MakeListContainer = function() {
+			var list = document.createElement('ul');
+			list.className = 'autocomplete-list';
+
+			return list;
+		};
+		var MakeListItem = function(text) {
+			var item = document.createElement('li');
+			item.innerText = text;
+			item.addEventListener(
+				'click',
+				function() {
+					//AddTag(this.innerText);
+				}
+			);
+		};
+		var MakeAutocompleteList = function(tags) {
+			var list = MakeListContainer();
+			for (var i = 0; i < tags.length; i++) {
+				var item = MakeListItem(tags[i]);
+				list.appendChild(item);
+			}
+
+			return list;
+		};
+
+		this.makeList = function(query) {
+			var tags = tags_generator(query);
+			var list = MakeAutocompleteList(tags);
+			root_container.appendChild(list);
+
+			return list;
+		};
+		this.removeList = function(list) {
+			root_container.removeChild(list);
+		};
+		this.refreshList = function(old_list, new_query) {
+			this.removeList(old_list);
+			return this.makeList(new_query);
+		};
+	};
 
 return function(root_element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
 
 	var self = this;
 	options = ProcessOptions(options);
-	var TagsGenerator = GetTagsGenerator(options);
+	var tags_generator = GetTagsGenerator(options);
 
 	var root = MakeRootContainer(root_element_query);
 	var inner_container = MakeInnerContainer(input);
 	root.appendChild(inner_container);
 
 	var list = null;
-	var CreateList = function(query) {
-		list = document.createElement('ul');
-		list.className = 'autocomplete-list';
-
-		var tags = TagsGenerator(query);
-		for (var i = 0; i < tags.length; i++) {
-			var text = tags[i];
-
-			var item = document.createElement('li');
-			item.innerText = text;
-			item.addEventListener(
-				'click',
-				function() {
-					AddTag(this.innerText);
-				}
-			);
-
-			list.appendChild(item);
-		}
-
-		root.appendChild(list);
-	};
-	var RemoveList = function(list) {
-		if (list != null) {
-			root.removeChild(list);
-		}
-	};
+	var list_manager = new AutocompleteListManager(tags_generator, root);
 
 	var input = document.createElement('input');
 	input.className = 'input';
@@ -89,10 +105,7 @@ return function(root_element_query, options) {
 	input.addEventListener(
 		'focus',
 		function() {
-			var list_copy = list;
-			RemoveList(list_copy);
-
-			CreateList(input.value);
+			list = list_manager.refreshList(list, input.value);
 		}
 	);
 	var list_update_timer = null;
@@ -115,10 +128,7 @@ return function(root_element_query, options) {
 			clearTimeout(list_update_timer);
 			list_update_timer = setTimeout(
 				function() {
-					var list_copy = list;
-					RemoveList(list_copy);
-
-					CreateList(input.value);
+					list = list_manager.refreshList(list, input.value);
 				},
 				LIST_UPDATE_TIMEOUT
 			);
@@ -129,8 +139,7 @@ return function(root_element_query, options) {
 		function() {
 			setTimeout(
 				function() {
-					var list_copy = list;
-					RemoveList(list_copy);
+					list_manager.removeList(list);
 				},
 				1
 			);
