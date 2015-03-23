@@ -37,9 +37,41 @@ var WizardTags = (function() {
 			}
 		};
 	})();
+	var ContainersManager = (function() {
+		return {
+			getRoot: function(root_element_query) {
+				var root_container = document.querySelector(root_element_query);
+				root_container.className = 'wizard-tags';
+
+				return root_container;
+			},
+			makeInner: function(root_container, event_handlers) {
+				var inner_container = document.createElement('div');
+				inner_container.className = 'inner-container';
+				inner_container.addEventListener(
+					'click',
+					event_handlers.onClick
+				);
+
+				root_container.appendChild(inner_container);
+				return inner_container;
+			}
+		};
+	})();
 
 	return function(root_element_query, options) {
 		options = OptionsProcessor.process(options);
-		console.log(options);
+
+		var root_container = ContainersManager.getRoot(root_element_query);
+		console.log(root_container);
+		var inner_container = ContainersManager.makeInner(
+			root_container,
+			{
+				onClick: function() {
+					console.log('click on inner container');
+				}
+			}
+		);
+		console.log(inner_container);
 	};
 })();

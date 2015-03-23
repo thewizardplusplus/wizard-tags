@@ -1,22 +1,4 @@
 var WizardTags = (function() {
-	var MakeRootContainer = function(root_element_query) {
-		var root_container = document.querySelector(root_element_query);
-		root_container.className = 'wizard-tags';
-
-		return root_container;
-	};
-	var MakeInnerContainer = function(input) {
-		var inner_container = document.createElement('div');
-		inner_container.className = 'inner-container';
-		inner_container.addEventListener(
-			'click',
-			function() {
-				input.focus();
-			}
-		);
-
-		return inner_container;
-	};
 	var AutocompleteListManager = function(tags_generator, root_container) {
 		var MakeListContainer = function() {
 			var list = document.createElement('ul');
