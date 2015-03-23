@@ -120,52 +120,6 @@ return function(root_element_query, options) {
 	var list = null;
 	var list_manager = new AutocompleteListManager(tags_generator, root);
 
-	var input = document.createElement('input');
-	input.className = 'input';
-	input.setAttribute('size', 1);
-	input.addEventListener(
-		'focus',
-		function() {
-			list = list_manager.refreshList(list, input.value);
-		}
-	);
-	var list_update_timer = null;
-	input.addEventListener(
-		'keyup',
-		function() {
-			var new_size = input.value.length + 1;
-			input.setAttribute('size', new_size);
-
-			var last_symbol = input.value.slice(-1);
-			if (options.separators.indexOf(last_symbol) != -1) {
-				AddTag(input.value.slice(0, -1));
-
-				input.value = '';
-				input.setAttribute('size', 1);
-
-				return;
-			}
-
-			clearTimeout(list_update_timer);
-			list_update_timer = setTimeout(
-				function() {
-					list = list_manager.refreshList(list, input.value);
-				},
-				LIST_UPDATE_TIMEOUT
-			);
-		}
-	);
-	input.addEventListener(
-		'blur',
-		function() {
-			setTimeout(
-				function() {
-					list_manager.removeList(list);
-				},
-				1
-			);
-		}
-	);
-	inner_container.appendChild(input);
+	
 };
 })();
