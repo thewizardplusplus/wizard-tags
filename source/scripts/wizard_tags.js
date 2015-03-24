@@ -198,18 +198,75 @@ var WizardTags = (function() {
 			event_handlers.onTagListChange();
 		};
 	};
+	var AutocompleteListManager = function(
+		tags_generator,
+		root_container,
+		event_handlers
+	) {
+		var MakeListContainer = function() {
+			var list = document.createElement('ul');
+			list.className = 'autocomplete-list';
+
+			return list;
+		};
+		var MakeListItem = function(text) {
+			var item = document.createElement('li');
+			item.innerHTML = text;
+			item.addEventListener(
+				'click',
+				function() {
+					event_handlers.addTag(text);
+				}
+			);
+
+			return item;
+		};
+		var MakeAutocompleteList = function(tags) {
+			var list = MakeListContainer();
+			for (var i = 0; i < tags.length; i++) {
+				var item = MakeListItem(tags[i]);
+				list.appendChild(item);
+			}
+
+			return list;
+		};
+
+		this.makeList = function(query) {
+			var tags = tags_generator(query);
+			if (tags.length) {
+				var list = MakeAutocompleteList(tags);
+				root_container.appendChild(list);
+
+				return list;
+			} else {
+				return null;
+			}
+		};
+		this.removeList = function(list) {
+			if (list && list.parentNode == root_container) {
+				root_container.removeChild(list);
+			}
+		};
+		this.updateList = function(old_list, new_query) {
+			this.removeList(old_list);
+			return this.makeList(new_query);
+		};
+	};
 
 	return function(root_element_query, options) {
 		options = OptionsProcessor.process(options);
 
 		var self = this;
+		var list = null;
+		var updateAutocompleteList = function(query) {
+			list = list_manager.updateList(list, query);
+		};
 		var root_container = ContainersManager.getRoot(root_element_query);
 		var inner_container = ContainersManager.makeInner(
 			root_container,
 			{
 				updateAutocompleteList: function() {
-					var query = input.value;
-					console.log('change query in input: ' + query);
+					updateAutocompleteList(input.value);
 				}
 			}
 		);
@@ -235,8 +292,20 @@ var WizardTags = (function() {
 						tags_event_handlers
 					);
 				},
-				updateAutocompleteList: function(query) {
-					console.log('change query in input: ' + query);
+				updateAutocompleteList: updateAutocompleteList
+			}
+		);
+		var list_manager = new AutocompleteListManager(
+			options.tags,
+			root_container,
+			{
+				addTag: function(text) {
+					tag_manager.addTag(
+						text,
+						inner_container,
+						input,
+						tags_event_handlers
+					);
 				}
 			}
 		);
