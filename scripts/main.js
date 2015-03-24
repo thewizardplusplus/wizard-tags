@@ -10,7 +10,7 @@ window.addEventListener(
 				onChange: function() {
 					var tags = this.getTags();
 					if (tags.length) {
-						selected_tags_view.innerText = tags.join(', ');
+						selected_tags_view.innerHTML = tags.join(', ');
 					} else {
 						selected_tags_view.innerHTML = '&mdash;';
 					}

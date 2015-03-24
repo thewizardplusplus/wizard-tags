@@ -41,70 +41,6 @@ var WizardTags = (function() {
 			return this.makeList(new_query);
 		};
 	};
-	var TagManager = function(inner_container, change_handler) {
-		var MakeTagView = function() {
-			var tag_view = document.createElement('span');
-			tag_view.className = 'tag-view';
-
-			return tag_view;
-		};
-		var MakeTextView = function(text) {
-			var text_view = document.createElement('span');
-			text_view.className = 'text-view';
-			text_view.innerText = text;
-
-			return text_view;
-		};
-		var MakeRemoveButton = function(tag) {
-			var remove_button = document.createElement('span');
-			remove_button.className = 'remove-button';
-			remove_button.addEventListener(
-				'click',
-				function() {
-					this.removeTag(tag);
-				}
-			);
-
-			return remove_button;
-		};
-		var MakeTag = function(text) {
-			var tag_view = MakeTagView();
-
-			var text_view = MakeTextView(text);
-			tag_view.appendChild(text_view);
-
-			var remove_button = MakeRemoveButton(tag);
-			tag_view.appendChild(remove_button);
-
-			return tag_view;
-		};
-
-		this.getTags = function() {
-			var tags = [];
-			var tags_views = inner_container.querySelectorAll('.tag-view');
-			for (var i = 0; i < tags_views.length; i++) {
-				var tag = tags_views[i].querySelector('.text-view').innerText;
-				tags.push(tag);
-			}
-
-			return tags;
-		};
-		this.addTag = function(text) {
-			text = text.trim();
-			if (text.length == 0) {
-				return;
-			}
-
-			var tag = MakeTag(text);
-			inner_container.insertBefore(tag, input);
-
-			change_handler();
-		};
-		this.removeTag = function(tag) {
-			inner_container.removeChild(tag);
-			change_handler();
-		};
-	};
 
 return function(root_element_query, options) {
 	var LIST_UPDATE_TIMEOUT = 300;
@@ -120,6 +56,6 @@ return function(root_element_query, options) {
 	var list = null;
 	var list_manager = new AutocompleteListManager(tags_generator, root);
 
-	
+
 };
 })();
