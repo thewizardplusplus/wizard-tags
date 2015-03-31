@@ -1,3 +1,26 @@
+/** @license The MIT License (MIT)
+ *
+ * Copyright (c) 2015 thewizardplusplus <thewizardplusplus@yandex.ru>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 var WizardTags = (function() {
 	var OptionsProcessor = (function() {
 		var MakeDefaultTagsGenerator = function(tags) {
@@ -59,7 +82,10 @@ var WizardTags = (function() {
 		};
 	})();
 	var MakeInput = (function() {
+		/** @const */
 		var LIST_UPDATE_TIMEOUT = 300;
+		/** @const */
+		var LIST_REMOVE_DELAY = 250;
 
 		var UpdateInputSize = function(input) {
 			var new_size = input.value.length + 1;
@@ -85,19 +111,26 @@ var WizardTags = (function() {
 			var list_update_timer = null;
 			input.addEventListener(
 				'keyup',
-				function() {
-					UpdateInputSize(this);
-
+				function(event) {
 					var last_symbol = this.value.slice(-1);
 					if (
-						last_symbol.length
-						&& separators.indexOf(last_symbol) != -1
+						event.which == 13
+						|| (last_symbol.length
+						&& separators.indexOf(last_symbol) != -1)
 					) {
-						event_handlers.addTag(this.value.slice(0, -1));
+						event_handlers.addTag(
+							event.which == 13
+								? this.value
+								: this.value.slice(0, -1)
+						);
+
 						ClearInput(this);
+						event_handlers.updateAutocompleteList('');
 
 						return;
 					}
+
+					UpdateInputSize(this);
 
 					clearTimeout(list_update_timer);
 					var self = this;
@@ -115,9 +148,9 @@ var WizardTags = (function() {
 				function() {
 					setTimeout(
 						function() {
-							event_handlers.updateAutocompleteList('');
+							event_handlers.removeAutocompleteList();
 						},
-						1
+						LIST_REMOVE_DELAY
 					);
 				}
 			);
@@ -126,6 +159,7 @@ var WizardTags = (function() {
 			return input;
 		};
 	})();
+	/** @constructor */
 	var TagManager = function(inner_container, input, event_handlers) {
 		var MakeTagView = function() {
 			var tag_view = document.createElement('span');
@@ -198,6 +232,7 @@ var WizardTags = (function() {
 			event_handlers.onTagListChange();
 		};
 	};
+	/** @constructor */
 	var AutocompleteListManager = function(
 		tags_generator,
 		root_container,
@@ -261,15 +296,17 @@ var WizardTags = (function() {
 		var updateAutocompleteList = function(query) {
 			list = list_manager.updateList(list, query);
 		};
+
 		var root_container = ContainersManager.getRoot(root_element_query);
 		var inner_container = ContainersManager.makeInner(
 			root_container,
 			{
 				updateAutocompleteList: function() {
-					updateAutocompleteList(input.value);
+					input.focus();
 				}
 			}
 		);
+
 		var tags_event_handlers = {
 			onTagListChange: function() {
 				options.onChange.apply(self);
@@ -280,6 +317,7 @@ var WizardTags = (function() {
 			input,
 			tags_event_handlers
 		);
+
 		var input = MakeInput(
 			inner_container,
 			options.separators,
@@ -292,9 +330,14 @@ var WizardTags = (function() {
 						tags_event_handlers
 					);
 				},
-				updateAutocompleteList: updateAutocompleteList
+				updateAutocompleteList: updateAutocompleteList,
+				removeAutocompleteList: function() {
+					list_manager.removeList(list);
+					list = null;
+				}
 			}
 		);
+
 		var list_manager = new AutocompleteListManager(
 			options.tags,
 			root_container,
