@@ -44,6 +44,7 @@
 	float: left;
 	border: 0;
 	font-size: inherit;
+	outline: none;
 }
 
 .wizard-tags .autocomplete-list {
