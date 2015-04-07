@@ -124,9 +124,6 @@ var WizardTags = (function() {
 								: this.value.slice(0, -1)
 						);
 
-						ClearInput(this);
-						event_handlers.updateAutocompleteList('');
-
 						return;
 					}
 
@@ -154,6 +151,11 @@ var WizardTags = (function() {
 					);
 				}
 			);
+
+			input.clear = function() {
+				ClearInput(this);
+				event_handlers.updateAutocompleteList('');
+			};
 
 			inner_container.appendChild(input);
 			return input;
@@ -228,8 +230,9 @@ var WizardTags = (function() {
 
 			var tag = MakeTag(text, inner_container, event_handlers);
 			inner_container.insertBefore(tag, input);
-
 			event_handlers.onTagListChange();
+
+			input.clear();
 		};
 	};
 	/** @constructor */
