@@ -6,6 +6,7 @@ window.addEventListener(
 			'.tags-input',
 			{
 				tags: ['one', 'two', 'three', 'four', 'five', '', '      six'],
+				default_tags: ['one', 'two'],
 				separators: ',',
 				only_unique: true,
 				placeholder: 'Tags',

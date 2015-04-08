@@ -87,6 +87,9 @@ var WizardTags = (function() {
 				var processed_options = options || {};
 				processed_options.sort = GetTagsSorter(processed_options);
 				processed_options.tags = GetTagsGenerator(processed_options);
+				processed_options.default_tags =
+					processed_options.default_tags
+					|| [];
 				processed_options.separators =
 					processed_options.separators
 					|| ' ';
@@ -454,5 +457,22 @@ var WizardTags = (function() {
 		this.getTags = function() {
 			return tag_manager.getTags();
 		};
+
+		options.default_tags.map(
+			function(default_tag) {
+				default_tag = default_tag.trim();
+				if (default_tag.length == 0) {
+					return;
+				}
+
+				tag_manager.addTag(
+					default_tag,
+					options.only_unique,
+					inner_container,
+					input,
+					tags_event_handlers
+				);
+			}
+		);
 	};
 })();
