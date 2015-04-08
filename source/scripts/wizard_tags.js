@@ -72,6 +72,12 @@ var WizardTags = (function() {
 						return tag.trim();
 					}
 				);
+				// remove duplicates
+				tags = tags.filter(
+					function(value, index, self) {
+						return self.indexOf(value) == index;
+					}
+				);
 				if (options.sort) {
 					tags = tags.sort(options.sort);
 				}

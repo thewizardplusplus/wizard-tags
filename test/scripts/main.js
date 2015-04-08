@@ -5,7 +5,18 @@ window.addEventListener(
 		var tags_input = new WizardTags(
 			'.tags-input',
 			{
-				tags: ['one', 'two', 'three', 'four', 'five', '', '      six'],
+				tags: [
+					'one',
+					'two',
+					'three',
+					'four',
+					'four',
+					'five',
+					'five',
+					'',
+					'      six',
+					'six'
+				],
 				default_tags: ['one', 'two'],
 				separators: ',',
 				only_unique: true,
