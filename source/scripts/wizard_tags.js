@@ -401,7 +401,7 @@ var WizardTags = (function() {
 			onTagListChange: function() {
 				input.setAttribute(
 					'placeholder',
-					!self.getTags().length
+					self.getTags().length == 0
 						? options.placeholder
 						: ''
 				);
