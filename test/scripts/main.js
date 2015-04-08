@@ -7,6 +7,7 @@ window.addEventListener(
 			{
 				tags: ['one', 'two', 'three', 'four', 'five', '', '      six'],
 				separators: ',',
+				only_unique: true,
 				onChange: function() {
 					var tags = this.getTags();
 					if (tags.length) {

@@ -52,6 +52,7 @@ var WizardTags = (function() {
 				processed_options.separators =
 					processed_options.separators
 					|| ' ';
+				processed_options.only_unique = !!processed_options.only_unique;
 				processed_options.onChange =
 					processed_options.onChange
 					|| function() {};
@@ -222,9 +223,18 @@ var WizardTags = (function() {
 
 			return tags;
 		};
-		this.addTag = function(text, inner_container, input, event_handlers) {
+		this.addTag = function(
+			text,
+			only_unique,
+			inner_container,
+			input,
+			event_handlers
+		) {
 			text = text.trim();
 			if (text.length == 0) {
+				return;
+			}
+			if (only_unique && this.getTags().indexOf(text) != -1) {
 				return;
 			}
 
@@ -335,6 +345,7 @@ var WizardTags = (function() {
 				addTag: function(text) {
 					tag_manager.addTag(
 						text,
+						options.only_unique,
 						inner_container,
 						input,
 						tags_event_handlers
@@ -355,6 +366,7 @@ var WizardTags = (function() {
 				addTag: function(text) {
 					tag_manager.addTag(
 						text,
+						options.only_unique,
 						inner_container,
 						input,
 						tags_event_handlers
