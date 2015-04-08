@@ -8,6 +8,7 @@ window.addEventListener(
 				tags: ['one', 'two', 'three', 'four', 'five', '', '      six'],
 				separators: ',',
 				only_unique: true,
+				sort: 'desc',
 				onChange: function() {
 					var tags = this.getTags();
 					if (tags.length) {

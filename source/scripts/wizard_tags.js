@@ -23,13 +23,41 @@
 
 var WizardTags = (function() {
 	var OptionsProcessor = (function() {
-		var MakeDefaultTagsGenerator = function(tags) {
+		var AscTagsSorter = function(tag_1, tag_2) {
+			return tag_1.localeCompare(tag_2);
+		};
+		var DescTagsSorter = function(tag_1, tag_2) {
+			return tag_2.localeCompare(tag_1);
+		};
+		var GetTagsSorter = function(options) {
+			var tags_sorter = null;
+			if (
+				typeof options.sort == 'string'
+				|| options.sort instanceof String
+			) {
+				if (options.sort == 'asc') {
+					tags_sorter = AscTagsSorter;
+				} else if (options.sort == 'desc') {
+					tags_sorter = DescTagsSorter;
+				}
+			} else if (options.sort instanceof Function) {
+				tags_sorter = options.sort;
+			}
+
+			return tags_sorter;
+		};
+		var MakeDefaultTagsGenerator = function(tags, sorter) {
 			return function(query) {
-				return tags.filter(
+				tags = tags.filter(
 					function(tag) {
 						return tag.substr(0, query.length) == query;
 					}
 				);
+				if (sorter) {
+					tags = tags.sort(sorter);
+				}
+
+				return tags;
 			};
 		};
 		var GetTagsGenerator = function(options) {
@@ -39,7 +67,10 @@ var WizardTags = (function() {
 			if (options.tags instanceof Function) {
 				tags_generator = options.tags;
 			} else if (options.tags instanceof Array) {
-				tags_generator = MakeDefaultTagsGenerator(options.tags);
+				tags_generator = MakeDefaultTagsGenerator(
+					options.tags,
+					options.sort
+				);
 			}
 
 			return tags_generator;
@@ -48,6 +79,7 @@ var WizardTags = (function() {
 		return {
 			process: function(options) {
 				var processed_options = options || {};
+				processed_options.sort = GetTagsSorter(processed_options);
 				processed_options.tags = GetTagsGenerator(processed_options);
 				processed_options.separators =
 					processed_options.separators
