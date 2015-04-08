@@ -73,7 +73,13 @@ var WizardTags = (function() {
 				);
 			}
 
-			return tags_generator;
+			return function(query) {
+				return tags_generator(query).map(
+					function(tag) {
+						return tag.trim();
+					}
+				);
+			};
 		};
 
 		return {
@@ -318,8 +324,12 @@ var WizardTags = (function() {
 			return list;
 		};
 
-		this.makeList = function(query) {
+		this.makeList = function(query, additional_filter) {
 			var tags = tags_generator(query);
+			if (additional_filter) {
+				tags = additional_filter(tags);
+			}
+
 			if (tags.length) {
 				var list = MakeAutocompleteList(tags);
 				root_container.appendChild(list);
@@ -334,9 +344,9 @@ var WizardTags = (function() {
 				root_container.removeChild(list);
 			}
 		};
-		this.updateList = function(old_list, new_query) {
+		this.updateList = function(old_list, new_query, additional_filter) {
 			this.removeList(old_list);
-			return this.makeList(new_query);
+			return this.makeList(new_query, additional_filter);
 		};
 	};
 
@@ -345,8 +355,19 @@ var WizardTags = (function() {
 
 		var self = this;
 		var list = null;
+		var uniqueFilter = function(tags) {
+			return tags.filter(
+				function(tag) {
+					return tag_manager.getTags().indexOf(tag) == -1;
+				}
+			);
+		};
 		var updateAutocompleteList = function(query) {
-			list = list_manager.updateList(list, query);
+			list = list_manager.updateList(
+				list,
+				query,
+				options.only_unique ? uniqueFilter : null
+			);
 		};
 
 		var root_container = ContainersManager.getRoot(root_element_query);
