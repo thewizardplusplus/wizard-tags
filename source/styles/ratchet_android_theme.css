@@ -21,62 +21,49 @@
  * SOFTWARE.
  */
 
+@import url("default_theme.css");
 @charset "utf-8";
 
 .wizard-tags {
-	padding: 5px 5px 0 5px;
-	border-color: #888;
+	border-color: #d9d9d9;
+	border-radius: 2px;
 }
 
 .wizard-tags .input {
-	margin: 1px 6px 6px 1px;
+	background-color: inherit;
 }
 
 .wizard-tags .autocomplete-list {
-	border-color: #888;
+	border-color: #d9d9d9;
+	border-radius: 0 0 2px 2px;
 }
 
 .wizard-tags .autocomplete-list li {
-	padding: 5px;
-	border-top-color: #ccc;
-	cursor: pointer;
-}
-
-.wizard-tags .autocomplete-list li:hover {
-	background-color: #ccc;
+	background-color: white;
+	border-top-color: #d9d9d9;
 }
 
 .wizard-tags .autocomplete-list li:active {
-	background-color: #aaa;
+	background-color: #9c0;
 }
 
 .wizard-tags .inner-container .tag-view {
-	margin: 0 5px 5px 0;
-	background-color: #ccc;
-	border-color: #888;
-}
-
-.wizard-tags .inner-container .tag-view .text-view {
-	padding: 0 5px;
+	color: white;
+	background-color: #9c0;
+	border-color: #739900;
+	border-radius: 2px;
 }
 
 .wizard-tags .inner-container .tag-view .remove-button {
-	background-color: #ccc;
-}
-
-.wizard-tags .inner-container .tag-view .remove-button:hover {
-	background-color: #aaa;
+	background-color: #9c0;
 }
 
 .wizard-tags .inner-container .tag-view .remove-button:active {
-	background-color: #888;
+	background-color: #739900;
 }
 
 .wizard-tags .inner-container .tag-view .remove-button:after {
-	content: '\002715';
-	display: inline-block;
-	width: 1.5em;
-	border-left-color: #888;
-	text-align: center;
-	cursor: pointer;
+	content: '\e811';
+	border-left-color: #739900;
+	font-family: Ratchicons;
 }
