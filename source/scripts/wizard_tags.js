@@ -1,4 +1,4 @@
-/** @license The MIT License (MIT)
+/* The MIT License (MIT)
  *
  * Copyright (c) 2015 thewizardplusplus <thewizardplusplus@yandex.ru>
  *
@@ -121,9 +121,7 @@ var WizardTags = (function() {
 		};
 	})();
 	var MakeInput = (function() {
-		/** @const */
 		var LIST_UPDATE_TIMEOUT = 300;
-		/** @const */
 		var LIST_REMOVE_DELAY = 250;
 
 		var UpdateInputSize = function(input) {
@@ -200,7 +198,6 @@ var WizardTags = (function() {
 			return input;
 		};
 	})();
-	/** @constructor */
 	var TagManager = function(inner_container, input, event_handlers) {
 		var MakeTagView = function() {
 			var tag_view = document.createElement('span');
@@ -283,7 +280,6 @@ var WizardTags = (function() {
 			input.clear();
 		};
 	};
-	/** @constructor */
 	var AutocompleteListManager = function(
 		tags_generator,
 		root_container,
