@@ -5,7 +5,7 @@ window.addEventListener(
 		var tags_input = new WizardTags(
 			'.tags-input',
 			{
-				tags: ['one', 'two', 'three', 'four', 'five'],
+				tags: ['one', 'two', 'three', 'four', 'five', '', '      six'],
 				separators: ',',
 				onChange: function() {
 					var tags = this.getTags();

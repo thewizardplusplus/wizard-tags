@@ -248,6 +248,11 @@ var WizardTags = (function() {
 			return list;
 		};
 		var MakeListItem = function(text) {
+			text = text.trim();
+			if (text.length == 0) {
+				return false;
+			}
+
 			var item = document.createElement('li');
 			item.innerHTML = text;
 			item.addEventListener(
@@ -263,7 +268,9 @@ var WizardTags = (function() {
 			var list = MakeListContainer();
 			for (var i = 0; i < tags.length; i++) {
 				var item = MakeListItem(tags[i]);
-				list.appendChild(item);
+				if (item) {
+					list.appendChild(item);
+				}
 			}
 
 			return list;
