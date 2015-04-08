@@ -24,52 +24,59 @@
 @charset "utf-8";
 
 .wizard-tags {
-	border: 1px solid;
-}
-
-.wizard-tags * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-.wizard-tags .inner-container:after {
-	content: '';
-	display: block;
-	clear: left;
+	padding: 5px 0 0 5px;
+	border-color: #888;
 }
 
 .wizard-tags .input {
-	float: left;
-	border: 0;
-	font-size: inherit;
-	outline: none;
+	margin: 1px 6px 6px 1px;
 }
 
 .wizard-tags .autocomplete-list {
-	float: left;
-	width: 100%;
-	border: 1px solid;
-	overflow-x: hidden;
-	overflow-y: auto;
-	list-style-type: none;
+	border-color: #888;
 }
 
 .wizard-tags .autocomplete-list li {
-	border-top: 1px solid;
+	padding: 5px;
+	border-top-color: #ccc;
+	cursor: pointer;
 }
 
-.wizard-tags .autocomplete-list li:first-child {
-	border-top: 0;
+.wizard-tags .autocomplete-list li:hover {
+	background-color: #ccc;
+}
+
+.wizard-tags .autocomplete-list li:active {
+	background-color: #aaa;
 }
 
 .wizard-tags .inner-container .tag-view {
-	display: block;
-	float: left;
-	border: 1px solid;
+	margin: 0 5px 5px 0;
+	background-color: #ccc;
+	border-color: #888;
+}
+
+.wizard-tags .inner-container .tag-view .text-view {
+	padding: 0 5px;
+}
+
+.wizard-tags .inner-container .tag-view .remove-button {
+	background-color: #ccc;
+}
+
+.wizard-tags .inner-container .tag-view .remove-button:hover {
+	background-color: #aaa;
+}
+
+.wizard-tags .inner-container .tag-view .remove-button:active {
+	background-color: #888;
 }
 
 .wizard-tags .inner-container .tag-view .remove-button:after {
-	content: 'x';
-	border-left: 1px solid;
+	content: '\002715';
+	display: inline-block;
+	width: 1.5em;
+	border-left-color: #888;
+	text-align: center;
+	cursor: pointer;
 }
