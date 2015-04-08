@@ -91,6 +91,9 @@ var WizardTags = (function() {
 					processed_options.separators
 					|| ' ';
 				processed_options.only_unique = !!processed_options.only_unique;
+				processed_options.placeholder =
+					processed_options.placeholder
+					|| 'Теги';
 				processed_options.onChange =
 					processed_options.onChange
 					|| function() {};
@@ -125,7 +128,13 @@ var WizardTags = (function() {
 		var LIST_REMOVE_DELAY = 250;
 
 		var UpdateInputSize = function(input) {
-			var new_size = input.value.length + 1;
+			var new_size = input.value.length;
+			if (new_size == 0 && input.hasAttribute('placeholder')) {
+				var placeholder = input.getAttribute('placeholder');
+				new_size = placeholder.length;
+			}
+			new_size += 1;
+
 			input.setAttribute('size', new_size);
 		};
 		var ClearInput = function(input) {
@@ -133,9 +142,15 @@ var WizardTags = (function() {
 			UpdateInputSize(input);
 		};
 
-		return function(inner_container, separators, event_handlers) {
+		return function(
+			inner_container,
+			separators,
+			placeholder,
+			event_handlers
+		) {
 			var input = document.createElement('input');
 			input.className = 'input';
+			input.setAttribute('placeholder', placeholder);
 			UpdateInputSize(input);
 
 			input.addEventListener(
@@ -189,6 +204,9 @@ var WizardTags = (function() {
 				}
 			);
 
+			input.updateSize = function() {
+				UpdateInputSize(this);
+			};
 			input.clear = function() {
 				ClearInput(this);
 				event_handlers.updateAutocompleteList('');
@@ -378,6 +396,14 @@ var WizardTags = (function() {
 
 		var tags_event_handlers = {
 			onTagListChange: function() {
+				input.setAttribute(
+					'placeholder',
+					!self.getTags().length
+						? options.placeholder
+						: ''
+				);
+				input.updateSize();
+
 				options.onChange.apply(self);
 			}
 		};
@@ -390,6 +416,7 @@ var WizardTags = (function() {
 		var input = MakeInput(
 			inner_container,
 			options.separators,
+			options.placeholder,
 			{
 				addTag: function(text) {
 					tag_manager.addTag(
