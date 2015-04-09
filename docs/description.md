@@ -2,30 +2,30 @@
 
 ## Inclusion
 
-    ```html
-    <link
-        rel = "stylesheet"
-        href = "path_to_wizard_tags/styles/wizard_tags.css" />
-    <link
-        rel = "stylesheet"
-        href = "path_to_wizard_tags/styles/default_theme.css" />
-    <script src = "path_to_wizard_tags/scripts/wizard_tags.js"></script>
-    ```
+```html
+<link
+    rel = "stylesheet"
+    href = "path_to_wizard_tags/styles/wizard_tags.css" />
+<link
+    rel = "stylesheet"
+    href = "path_to_wizard_tags/styles/default_theme.css" />
+<script src = "path_to_wizard_tags/scripts/wizard_tags.js"></script>
+```
 
 With Ratchet library ([http://goratchet.com/](http://goratchet.com/)) can use
 special theme:
 
-    ```html
-    <link
-        rel = "stylesheet"
-        href = "path_to_wizard_tags/styles/ratchet_android_theme.css" />
-    ```
+```html
+<link
+    rel = "stylesheet"
+    href = "path_to_wizard_tags/styles/ratchet_android_theme.css" />
+```
 
 ## Using
 
-    ```javascript
-    new WizardTags(root_element_query, options)
-    ```
+```javascript
+new WizardTags(root_element_query, options)
+```
 
 * `root_element_query` &mdash; query for function `Element.querySelector()` for
 search of root element;
