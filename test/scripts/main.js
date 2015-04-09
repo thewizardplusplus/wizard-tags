@@ -20,7 +20,7 @@ window.addEventListener(
 				default_tags: ['one', 'two'],
 				separators: ',',
 				only_unique: true,
-				placeholder: 'Tags',
+				placeholder: 'Themes',
 				sort: 'desc',
 				onChange: function() {
 					var tags = this.getTags();

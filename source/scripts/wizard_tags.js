@@ -110,7 +110,7 @@ var WizardTags = (function() {
 				processed_options.only_unique = !!processed_options.only_unique;
 				processed_options.placeholder =
 					processed_options.placeholder
-					|| 'Теги';
+					|| 'Tags';
 				processed_options.onChange =
 					processed_options.onChange
 					|| function() {};
