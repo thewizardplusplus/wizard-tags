@@ -32,5 +32,16 @@ window.addEventListener(
 				}
 			}
 		);
+
+		var test_form = document.querySelector('.test-form');
+		test_form.addEventListener(
+			'submit',
+			function(event) {
+				console.log('attempt to submit test form');
+
+				event.preventDefault();
+				return false;
+			}
+		);
 	}
 );

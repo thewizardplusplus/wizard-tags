@@ -208,6 +208,15 @@ var WizardTags = (function() {
 					);
 				}
 			);
+			input.addEventListener(
+				'keydown',
+				function(event) {
+					if (event.which == 13) {
+						event.preventDefault();
+						return false;
+					}
+				}
+			);
 
 			input.addEventListener(
 				'blur',
