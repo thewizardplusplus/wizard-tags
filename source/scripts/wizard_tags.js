@@ -55,6 +55,27 @@ var WizardTags = (function() {
 				);
 			};
 		};
+		var TrimTags = function(tags) {
+			return tags.map(
+				function(tag) {
+					return tag.trim();
+				}
+			);
+		};
+		var UniqueTags = function(tags) {
+			return tags.filter(
+				function(value, index, self) {
+					return self.indexOf(value) == index;
+				}
+			);
+		};
+		var SortTags = function(tags, sorter) {
+			if (sorter) {
+				tags = tags.sort(sorter);
+			}
+
+			return tags;
+		};
 		var GetTagsGenerator = function(options) {
 			var tags_generator = function() {
 				return [];
@@ -67,20 +88,9 @@ var WizardTags = (function() {
 
 			return function(query) {
 				var tags = tags_generator(query);
-				tags = tags.map(
-					function(tag) {
-						return tag.trim();
-					}
-				);
-				// remove duplicates
-				tags = tags.filter(
-					function(value, index, self) {
-						return self.indexOf(value) == index;
-					}
-				);
-				if (options.sort) {
-					tags = tags.sort(options.sort);
-				}
+				tags = TrimTags(tags);
+				tags = UniqueTags(tags);
+				tags = SortTags(tags, options.sort);
 
 				return tags;
 			};
