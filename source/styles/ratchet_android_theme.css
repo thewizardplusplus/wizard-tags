@@ -46,6 +46,10 @@
 	border-top-color: #d9d9d9;
 }
 
+.wizard-tags .autocomplete-list li:hover {
+	background-color: white;
+}
+
 .wizard-tags .autocomplete-list li:active {
 	background-color: #9c0;
 }
@@ -58,6 +62,10 @@
 }
 
 .wizard-tags .inner-container .tag-view .remove-button {
+	background-color: #9c0;
+}
+
+.wizard-tags .inner-container .tag-view .remove-button:hover {
 	background-color: #9c0;
 }
 
