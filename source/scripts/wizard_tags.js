@@ -497,5 +497,7 @@ var WizardTags = (function() {
 				);
 			}
 		);
+		list_manager.removeList(list);
+		list = null;
 	};
 })();
