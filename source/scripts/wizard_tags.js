@@ -22,6 +22,8 @@
  */
 
 var WizardTags = (function() {
+	var VERSION = '1.0';
+
 	var OptionsProcessor = (function() {
 		var AscTagsSorter = function(tag_1, tag_2) {
 			return tag_1.localeCompare(tag_2);
@@ -477,6 +479,9 @@ var WizardTags = (function() {
 			}
 		);
 
+		this.getVersion = function() {
+			return VERSION;
+		};
 		this.getTags = function() {
 			return tag_manager.getTags();
 		};

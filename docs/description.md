@@ -49,6 +49,8 @@ onChange | Function | &mdash; | callback that is called when the tag list change
 
 ### Methods
 
+* `String getVersion(void)` &mdash; returns version of library, such as
+&laquo;1.0&raquo;;
 * `Array getTags(void)` &mdash; returns list of current added tags.
 
 ## Hotkeys

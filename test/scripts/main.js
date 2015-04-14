@@ -33,6 +33,9 @@ window.addEventListener(
 			}
 		);
 
+		var version_view = document.querySelector('.version-view');
+		version_view.innerHTML = tags_input.getVersion();
+
 		var test_form = document.querySelector('.test-form');
 		test_form.addEventListener(
 			'submit',
