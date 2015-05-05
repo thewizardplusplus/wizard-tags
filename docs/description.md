@@ -51,9 +51,11 @@ onChange | Function | &mdash; | callback that is called when the tag list change
 
 * `String getVersion(void)` &mdash; returns version of library, such as
 &laquo;1.0&raquo;;
-* `Array getTags(void)` &mdash; returns list of current added tags.
+* `Array getTags(void)` &mdash; returns list of current added tags;
+* `void addCurrentText(void)` &mdash; creates the tag from all characters in the
+input field.
 
 ## Hotkeys
 
-* <kbd>Enter</kbd> &mdash; created the tag from all characters in the input
+* <kbd>Enter</kbd> &mdash; creates the tag from all characters in the input
 field.
