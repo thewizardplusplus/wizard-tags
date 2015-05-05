@@ -22,7 +22,7 @@
  */
 
 var WizardTags = (function() {
-	var VERSION = '1.0';
+	var VERSION = '1.1';
 
 	var OptionsProcessor = (function() {
 		var AscTagsSorter = function(tag_1, tag_2) {
