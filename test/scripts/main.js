@@ -46,5 +46,14 @@ window.addEventListener(
 				return false;
 			}
 		);
+
+		var add_current_text_button = document.querySelector('.add-current-text-button');
+		add_current_text_button.addEventListener(
+			'click',
+			function() {
+				version_view.innerHTML = "ok";
+				tags_input.addCurrentText();
+			}
+		);
 	}
 );
