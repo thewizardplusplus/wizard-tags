@@ -37,6 +37,7 @@ Name | Type | Default | Description
 --- | --- | --- | ---
 tags | Array | &mdash; | list of available tags
  | Function || callback which returns list of available tags that correspond to the query (callback signature: `array function(string query)`)
+case_insensitive | Boolean | `false` | if `true` default tags generator case insensitive
 sort | String | &mdash; | method of sorting a list of available tags; available values: `asc` &mdash; ascending, `desc` &mdash; descending
  | Function || function for sorting a list of available tags; function signature correspond to callback signature of function `Array.sort()`
 default_tags | Array | `[]` (empty array) | the initial value of the tag editor
