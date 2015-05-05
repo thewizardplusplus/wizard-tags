@@ -48,11 +48,14 @@ var WizardTags = (function() {
 
 			return tags_sorter;
 		};
-		var MakeDefaultTagsGenerator = function(tags) {
+		var MakeDefaultTagsGenerator = function(tags, case_insensitive) {
 			return function(query) {
 				return tags.filter(
 					function(tag) {
-						return tag.substr(0, query.length) == query;
+						var tag_prefix = tag.substr(0, query.length);
+						return tag_prefix == query
+							|| (case_insensitive
+							&& tag_prefix.toLowerCase() == query.toLowerCase());
 					}
 				);
 			};
@@ -85,7 +88,10 @@ var WizardTags = (function() {
 			if (options.tags instanceof Function) {
 				tags_generator = options.tags;
 			} else if (options.tags instanceof Array) {
-				tags_generator = MakeDefaultTagsGenerator(options.tags);
+				tags_generator = MakeDefaultTagsGenerator(
+					options.tags,
+					options.case_insensitive
+				);
 			}
 
 			return function(query) {
@@ -101,6 +107,8 @@ var WizardTags = (function() {
 		return {
 			process: function(options) {
 				var processed_options = options || {};
+				processed_options.case_insensitive =
+					!!processed_options.case_insensitive;
 				processed_options.sort = GetTagsSorter(processed_options);
 				processed_options.tags = GetTagsGenerator(processed_options);
 				processed_options.default_tags =
