@@ -486,9 +486,8 @@ var WizardTags = (function() {
 			return tag_manager.getTags();
 		};
 		this.addCurrentText = function() {
-			var text = input.val();
 			tag_manager.addTag(
-				text,
+				input.value,
 				options.only_unique,
 				inner_container,
 				input,

@@ -34,26 +34,31 @@ window.addEventListener(
 		);
 
 		var version_view = document.querySelector('.version-view');
-		version_view.innerHTML = tags_input.getVersion();
+		if (version_view) {
+			version_view.innerHTML = tags_input.getVersion();
+		}
 
 		var test_form = document.querySelector('.test-form');
-		test_form.addEventListener(
-			'submit',
-			function(event) {
-				console.log('attempt to submit test form');
+		if (test_form) {
+			test_form.addEventListener(
+				'submit',
+				function(event) {
+					console.log('attempt to submit test form');
 
-				event.preventDefault();
-				return false;
-			}
-		);
+					event.preventDefault();
+					return false;
+				}
+			);
+		}
 
-		var add_current_text_button = document.querySelector('.add-current-text-button');
-		add_current_text_button.addEventListener(
-			'click',
-			function() {
-				version_view.innerHTML = "ok";
-				tags_input.addCurrentText();
-			}
-		);
+		var adding_button = document.querySelector('.adding-button');
+		if (adding_button) {
+			adding_button.addEventListener(
+				'click',
+				function() {
+					tags_input.addCurrentText();
+				}
+			);
+		}
 	}
 );
