@@ -59,4 +59,7 @@ input field.
 ## Hotkeys
 
 * <kbd>Enter</kbd> &mdash; creates the tag from all characters in the input
-field.
+field;
+* <kbd>Backspace</kbd> &mdash; the first press selects the last tag, the next
+press deletes it; if after the first time press any other key, the selection of
+the tag will be reset.
