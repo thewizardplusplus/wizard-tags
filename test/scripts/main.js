@@ -17,7 +17,7 @@ window.addEventListener(
 					'      six',
 					'six'
 				],
-				case_insensitive: true,
+				case_sensitive: true,
 				default_tags: ['one', 'two'],
 				separators: ',',
 				only_unique: true,
