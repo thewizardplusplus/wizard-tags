@@ -153,6 +153,8 @@ var WizardTags = (function() {
 	var MakeInput = (function() {
 		var LIST_UPDATE_TIMEOUT = 300;
 		var LIST_REMOVE_DELAY = 250;
+		var BACKSPACE_KEY_CODE = 8;
+		var ENTER_KEY_CODE = 13;
 
 		var UpdateInputSize = function(input) {
 			var new_size = input.value.length;
@@ -193,17 +195,21 @@ var WizardTags = (function() {
 				function(event) {
 					var last_symbol = this.value.slice(-1);
 					if (
-						event.which == 13
+						event.which == ENTER_KEY_CODE
 						|| (last_symbol.length
 						&& separators.indexOf(last_symbol) != -1)
 					) {
 						event_handlers.addTag(
-							event.which == 13
+							event.which == ENTER_KEY_CODE
 								? this.value
 								: this.value.slice(0, -1)
 						);
 
 						return;
+					}
+
+					if (event.which != BACKSPACE_KEY_CODE) {
+						event_handlers.remarkLastTag();
 					}
 
 					UpdateInputSize(this);
@@ -221,7 +227,21 @@ var WizardTags = (function() {
 			input.addEventListener(
 				'keydown',
 				function(event) {
-					if (event.which == 13) {
+					if (event.which == ENTER_KEY_CODE) {
+						event.preventDefault();
+						return false;
+					}
+
+					if (
+						event.which == BACKSPACE_KEY_CODE
+						&& this.value.length == 0
+					) {
+						if (event_handlers.isMarkedLastTag()) {
+							event_handlers.removeLastTag();
+						} else {
+							event_handlers.markLastTag();
+						}
+
 						event.preventDefault();
 						return false;
 					}
@@ -332,6 +352,36 @@ var WizardTags = (function() {
 			event_handlers.onTagListChange();
 
 			input.clear();
+		};
+		this.isMarkedLastTag = function() {
+			return !!inner_container.querySelector('.tag-view.for-remove');
+		};
+		this.markLastTag = function() {
+			var last_tag = inner_container.querySelector(
+				'.tag-view:last-of-type'
+			);
+			if (last_tag) {
+				last_tag.className += ' for-remove';
+			}
+		};
+		this.remarkLastTag = function() {
+			var marked_last_tag = inner_container.querySelector(
+				'.tag-view.for-remove'
+			);
+			if (marked_last_tag) {
+				marked_last_tag.className = marked_last_tag.className.replace(
+					/(?:^|\s+)for-remove(?:\s+|$)/,
+					' '
+				);
+			}
+		};
+		this.removeLastTag = function() {
+			var last_tag_remove_button = inner_container.querySelector(
+				'.tag-view.for-remove .remove-button'
+			);
+			if (last_tag_remove_button) {
+				last_tag_remove_button.click();
+			}
 		};
 	};
 	var AutocompleteListManager = function(
@@ -467,6 +517,18 @@ var WizardTags = (function() {
 				removeAutocompleteList: function() {
 					list_manager.removeList(list);
 					list = null;
+				},
+				isMarkedLastTag: function() {
+					return tag_manager.isMarkedLastTag();
+				},
+				markLastTag: function() {
+					tag_manager.markLastTag();
+				},
+				remarkLastTag: function() {
+					tag_manager.remarkLastTag();
+				},
+				removeLastTag: function() {
+					tag_manager.removeLastTag();
 				}
 			}
 		);

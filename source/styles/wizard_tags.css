@@ -69,6 +69,10 @@
 	border: 1px solid;
 }
 
+.wizard-tags .inner-container .tag-view.for-remove {
+	opacity: 0.5;
+}
+
 .wizard-tags .inner-container .tag-view .remove-button:after {
 	content: 'x';
 	border-left: 1px solid;
