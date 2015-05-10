@@ -156,6 +156,9 @@ var WizardTags = (function() {
 		var BACKSPACE_KEY_CODE = 8;
 		var ENTER_KEY_CODE = 13;
 
+		var GetKeyCode = function(event) {
+			return event.which || event.charCode || event.keyCode;
+		};
 		var UpdateInputSize = function(input) {
 			var new_size = input.value.length;
 			if (new_size == 0 && input.hasAttribute('placeholder')) {
@@ -195,12 +198,12 @@ var WizardTags = (function() {
 				function(event) {
 					var last_symbol = this.value.slice(-1);
 					if (
-						event.which == ENTER_KEY_CODE
+						GetKeyCode(event) == ENTER_KEY_CODE
 						|| (last_symbol.length
 						&& separators.indexOf(last_symbol) != -1)
 					) {
 						event_handlers.addTag(
-							event.which == ENTER_KEY_CODE
+							GetKeyCode(event) == ENTER_KEY_CODE
 								? this.value
 								: this.value.slice(0, -1)
 						);
@@ -208,7 +211,7 @@ var WizardTags = (function() {
 						return;
 					}
 
-					if (event.which != BACKSPACE_KEY_CODE) {
+					if (GetKeyCode(event) != BACKSPACE_KEY_CODE) {
 						event_handlers.remarkLastTag();
 					}
 
@@ -227,13 +230,13 @@ var WizardTags = (function() {
 			input.addEventListener(
 				'keydown',
 				function(event) {
-					if (event.which == ENTER_KEY_CODE) {
+					if (GetKeyCode(event) == ENTER_KEY_CODE) {
 						event.preventDefault();
 						return false;
 					}
 
 					if (
-						event.which == BACKSPACE_KEY_CODE
+						GetKeyCode(event) == BACKSPACE_KEY_CODE
 						&& this.value.length == 0
 					) {
 						if (event_handlers.isMarkedLastTag()) {
