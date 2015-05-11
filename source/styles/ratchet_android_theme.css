@@ -56,6 +56,11 @@
 	background-color: #9c0;
 }
 
+.wizard-tags .autocomplete-list .match {
+	background-color: #ff0;
+	text-decoration: none;
+}
+
 .wizard-tags .inner-container .tag-view {
 	padding-top: 1px;
 	background-color: #9c0;

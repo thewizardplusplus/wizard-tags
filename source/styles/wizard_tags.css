@@ -63,6 +63,10 @@
 	border-top: 0;
 }
 
+.wizard-tags .autocomplete-list .match {
+	text-decoration: underline;
+}
+
 .wizard-tags .inner-container .tag-view {
 	display: block;
 	float: left;

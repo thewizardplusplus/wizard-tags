@@ -144,6 +144,50 @@ var WizardTags = (function() {
 
 			return tags;
 		};
+		var MarkMatches = function(tags, query, case_sensitive, search_mode) {
+			return tags.map(
+				function(tag) {
+					if (query.length != 0) {
+						if (search_mode == 'tag') {
+							return '<span class = "match">'
+								+ tag.substr(0, query.length)
+								+ '</span>'
+								+ tag.substr(query.length);
+						} else if (search_mode == 'words') {
+							var whitespaces_pattern = /\s+/g;
+							var index = 0;
+							while (true) {
+								var subtag = tag.substr(
+									index,
+									query.length
+								);
+								if (
+									(case_sensitive
+									&& subtag == query)
+									|| (!case_sensitive
+									&& subtag.toLowerCase()
+										== query.toLowerCase())
+								) {
+									return tag.substr(0, index)
+										+ '<span class = "match">'
+										+ subtag
+										+ '</span>'
+										+ tag.substr(index + query.length);
+								}
+
+								var match = whitespaces_pattern.exec(tag);
+								if (match === null) {
+									break;
+								}
+								index = whitespaces_pattern.lastIndex;
+							}
+						}
+					}
+
+					return tag;
+				}
+			);
+		};
 		var GetTagsGenerator = function(options) {
 			var tags_generator = function() {
 				return [];
@@ -163,6 +207,12 @@ var WizardTags = (function() {
 				tags = TrimTags(tags);
 				tags = UniqueTags(tags);
 				tags = SortTags(tags, options.sort);
+				tags = MarkMatches(
+					tags,
+					query,
+					options.case_sensitive,
+					options.search_mode
+				);
 
 				return tags;
 			};
@@ -479,7 +529,8 @@ var WizardTags = (function() {
 			item.addEventListener(
 				'click',
 				function() {
-					event_handlers.addTag(text);
+					var cleared_text = text.replace(/<[^>]+>/g, '');
+					event_handlers.addTag(cleared_text);
 				}
 			);
 
@@ -529,11 +580,13 @@ var WizardTags = (function() {
 		var self = this;
 		var list = null;
 		var uniqueFilter = function(tags) {
-			return tags.filter(
-				function(tag) {
-					return tag_manager.getTags().indexOf(tag) == -1;
-				}
-			);
+			return tags
+				.filter(
+					function(tag) {
+						var cleared_tag = tag.replace(/<[^>]+>/g, '');
+						return tag_manager.getTags().indexOf(cleared_tag) == -1;
+					}
+				);
 		};
 		var updateAutocompleteList = function(query) {
 			list = list_manager.updateList(
