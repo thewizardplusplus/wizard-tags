@@ -15,8 +15,10 @@ window.addEventListener(
 					'five',
 					'',
 					'      six',
-					'six'
+					'six',
+					'multi words tag'
 				],
+				search_mode: 'words',
 				case_sensitive: true,
 				default_tags: ['one', 'two'],
 				separators: ',',

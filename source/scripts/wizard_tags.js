@@ -48,14 +48,43 @@ var WizardTags = (function() {
 
 			return tags_sorter;
 		};
-		var MakeDefaultTagsGenerator = function(tags, case_sensitive) {
+		var MakeDefaultTagsGenerator = function(
+			tags,
+			case_sensitive,
+			search_mode
+		) {
 			return function(query) {
 				return tags.filter(
 					function(tag) {
-						var tag_prefix = tag.substr(0, query.length);
-						return (case_sensitive && tag_prefix == query)
-							|| (!case_sensitive
-							&& tag_prefix.toLowerCase() == query.toLowerCase());
+						var words = [];
+						if (search_mode == 'tag') {
+							words.push(tag);
+						} else if (search_mode == 'words') {
+							words =
+								tag
+								.split(/\s+/)
+								.filter(
+									function(word) {
+										return word.length != 0;
+									}
+								);
+						}
+
+						for (var i = 0; i < words.length; i++) {
+							var word = words[i];
+							var word_prefix = word.substr(0, query.length);
+							if (
+								(case_sensitive
+								&& word_prefix == query)
+								|| (!case_sensitive
+								&& word_prefix.toLowerCase()
+									== query.toLowerCase())
+							) {
+								return true;
+							}
+						}
+
+						return false;
 					}
 				);
 			};
@@ -90,7 +119,8 @@ var WizardTags = (function() {
 			} else if (options.tags instanceof Array) {
 				tags_generator = MakeDefaultTagsGenerator(
 					options.tags,
-					options.case_sensitive
+					options.case_sensitive,
+					options.search_mode
 				);
 			}
 
@@ -109,6 +139,9 @@ var WizardTags = (function() {
 				var processed_options = options || {};
 				processed_options.case_sensitive =
 					!!processed_options.case_sensitive;
+				processed_options.search_mode =
+					processed_options.search_mode
+					|| 'tag';
 				processed_options.sort = GetTagsSorter(processed_options);
 				processed_options.tags = GetTagsGenerator(processed_options);
 				processed_options.default_tags =
