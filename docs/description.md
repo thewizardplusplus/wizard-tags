@@ -39,7 +39,7 @@ tags | Array | &mdash; | list of available tags
  | Function || callback which returns list of available tags that correspond to the query (callback signature: `array function(string query)`)
 case_sensitive | Boolean | `false` | if `true` default tags generator case sensitive, else &mdash; case insensitive
 search_mode | String | `'tag'` | if `'tag'` default tags generator searches by tag prefix, if `'words'` default tags generator search by tag words prefix
-sort | String | `'asc'` | method of sorting a list of available tags; available values: `'asc'` &mdash; ascending, `'desc'` &mdash; descending, `'priorities-asc'` &mdash; ascending by priorities tags, `'priorities-desc'` &mdash; descending by priorities tags
+sort | String | &mdash; | method of sorting a list of available tags; available values: `'asc'` &mdash; ascending, `'desc'` &mdash; descending, `'priorities-asc'` &mdash; ascending by priorities tags, `'priorities-desc'` &mdash; descending by priorities tags
  | Function || function for sorting a list of available tags; function signature correspond to callback signature of function `Array.sort()`
 priorities_tags | Object | `{}` | hash-table of priorities tags (e.g. `{'tag 1': 1, 'tag 2': 2}`); if it does not contain a tag, its priority is 0
 default_tags | Array | `[]` (empty array) | the initial value of the tag editor
