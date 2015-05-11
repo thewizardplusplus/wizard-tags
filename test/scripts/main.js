@@ -24,7 +24,8 @@ window.addEventListener(
 				separators: ',',
 				only_unique: true,
 				placeholder: 'Themes',
-				sort: 'desc',
+				sort: 'priorities-desc',
+				priorities_tags: {'six': 2, 'four': 1},
 				onChange: function() {
 					var tags = this.getTags();
 					if (tags.length) {

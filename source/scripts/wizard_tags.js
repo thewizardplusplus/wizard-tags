@@ -31,6 +31,32 @@ var WizardTags = (function() {
 		var DescTagsSorter = function(tag_1, tag_2) {
 			return tag_2.localeCompare(tag_1);
 		};
+		var AscPrioritiesTagsSorter = function(priorities_tags) {
+			return function(tag_1, tag_2) {
+				var priority_tag_1 = priorities_tags[tag_1] || 0;
+				var priority_tag_2 = priorities_tags[tag_2] || 0;
+				if (priority_tag_1 < priority_tag_2) {
+					return -1;
+				} else if (priority_tag_1 == priority_tag_2) {
+					return 0;
+				} else {
+					return 1;
+				}
+			};
+		};
+		var DescPrioritiesTagsSorter = function(priorities_tags) {
+			return function(tag_1, tag_2) {
+				var priority_tag_1 = priorities_tags[tag_1] || 0;
+				var priority_tag_2 = priorities_tags[tag_2] || 0;
+				if (priority_tag_2 < priority_tag_1) {
+					return -1;
+				} else if (priority_tag_2 == priority_tag_1) {
+					return 0;
+				} else {
+					return 1;
+				}
+			};
+		};
 		var GetTagsSorter = function(options) {
 			var tags_sorter = null;
 			if (
@@ -41,6 +67,14 @@ var WizardTags = (function() {
 					tags_sorter = AscTagsSorter;
 				} else if (options.sort == 'desc') {
 					tags_sorter = DescTagsSorter;
+				} else if (options.sort == 'priorities-asc') {
+					tags_sorter = AscPrioritiesTagsSorter(
+						options.priorities_tags
+					);
+				} else if (options.sort == 'priorities-desc') {
+					tags_sorter = DescPrioritiesTagsSorter(
+						options.priorities_tags
+					);
 				}
 			} else if (options.sort instanceof Function) {
 				tags_sorter = options.sort;
@@ -142,6 +176,9 @@ var WizardTags = (function() {
 				processed_options.search_mode =
 					processed_options.search_mode
 					|| 'tag';
+				processed_options.priorities_tags =
+					processed_options.priorities_tags
+					|| {};
 				processed_options.sort = GetTagsSorter(processed_options);
 				processed_options.tags = GetTagsGenerator(processed_options);
 				processed_options.default_tags =
