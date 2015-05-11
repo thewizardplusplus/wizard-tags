@@ -18,8 +18,8 @@ window.addEventListener(
 					'six',
 					'multi words tag'
 				],
-				search_mode: 'words',
 				case_sensitive: true,
+				search_mode: 'words',
 				default_tags: ['one', 'two'],
 				separators: ',',
 				only_unique: true,
